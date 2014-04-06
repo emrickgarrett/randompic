@@ -19,7 +19,7 @@ function getWord(){
 	if(xmlHttp.status == 200){
 		return xmlHttp.responseText;
 	}else{
-		return "banana";
+		return "error";
 	}
 
 }
@@ -71,11 +71,10 @@ function getWord(){
 			newImg.style.float = "left"
 			newImg.style.marginTop= "50px";
 			newImg.style.marginLeft="15%";
-			
-			
+											
 			var imgW = result.width;
 			var imgH = result.height;
-			
+					
 			var ratio = 1.0;
 			
 			if(imgW > 600 || imgH > 350){
@@ -386,7 +385,12 @@ function populateGuesses(){
 		if(goodGuesses.indexOf(word[i]) != -1){
 			letter.innerHTML = letter.innerHTML + word[i] + " ";
 		}else{
-			letter.innerHTML = letter.innerHTML + "_" + " ";
+			
+			if(word[i] != " "){
+				letter.innerHTML = letter.innerHTML + "_" + " ";
+			}else{
+				letter.innerHTML = letter.innerHTML + " " + " ";
+			}
 		}
 		
 		guessArea.appendChild(letter);
@@ -396,6 +400,24 @@ function populateGuesses(){
 
 </script>
 
+
+<script>
+
+	document.addEventListener('keydown', function(event){
+		if(event.keyCode == 37 || event.keyCode == 39){
+			hasLost();
+			alert(event.keyCode);
+		}else if(event.keyCode >= 97 && event.keyCode <= 122){
+			makeGuess(String.fromCharCode(event.keyCode).toUpperCase());
+			alert(event.keyCode);
+		}else if(event.keyCode >= 65 || event.keyCode <= 90){
+			makeGuess(String.fromCharCode(event.keyCode);
+			alert(event.keyCode);	
+			
+		}
+	});
+
+</script>
 
 
 </body>

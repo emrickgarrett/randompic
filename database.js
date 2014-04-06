@@ -1,6 +1,6 @@
 
 var words = new Array();
-words[0] = "Bingo";
+words[0] = "Ace";
 words[1] = "Test";
 words[2] = "Dingus";
 words[3] = "Help";
