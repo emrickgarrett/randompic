@@ -144,8 +144,6 @@ function getWord() {
 
 <div id="Picture">
 
-<div id="content"></div>
-
 </div>
 
 <div id="Hangman">
@@ -167,12 +165,12 @@ function getWord() {
 
 </body>
 
-<!-- Update Hangman image -->
+<!-- Update Hangman image and Image Blocker -->
 <script>
 
 var wrongGuesses = 0;
 var imageURL = "images/Hangman";
-var div = document.getElementById("Hangman");
+var div;
 initHangman();
 
 function initHangman(){
@@ -186,6 +184,7 @@ function initHangman(){
 	
 	picture.src = imageURL + "0" + ".png";
 	div.appendChild(picture);
+	initCoverImage();
 }
 
 function guessedWrong(){
@@ -201,6 +200,44 @@ function guessedWrong(){
 	}
 	
 	div.appendChild(picture);
+}
+
+function initCoverImage(){
+	div2 = document.getElementById('Picture');
+	
+	while(div2.childNodes.length > 1){
+		div2.removeChild(div2.firstChild);
+	}
+	
+	var div3 = div2.firstChild;
+	div2.innerHTML = "boop";
+	div3.innerHTML = "asdfasf";
+	div3.innerHTML = "asdfasdf";
+	
+	var width = "100px";//div.firstChild.width;
+	var height = "100px";//div.firstChild.height;
+	var paddingLeft = "100px";//Math.floor(width/2);
+	var paddingTop = "100px";//Math.floor(height/2);
+	
+	var word = getImageWord();
+	
+	for(var i = 0; i < word.length; i++){
+		var part = document.createElement("img");
+		//part.style.position = "absolute";
+		//part.style.background = "#FFFFFF";
+		part.style.width = width + "px";
+		part.style.height = height + "px";
+		//part.style.paddingLeft = paddingLeft + "px";
+		//part.style.paddingTop = paddingTop + "px";
+		part.style.float = "left";
+		
+		div2.appendChild(part);
+	}
+	
+}
+
+function unlockImage(){
+
 }
 </script>	
 
