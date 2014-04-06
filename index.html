@@ -14,7 +14,7 @@
       google.load('search', '1');
 
       var imageSearch;
-	  var searchTerm = "Georgia";
+	  var searchTerm = "Doge";
 
       function searchComplete() {
 
@@ -112,6 +112,7 @@ function selectWord() {
 
 </script>	
 
+
 </head>
 <body>
 
@@ -123,18 +124,57 @@ function selectWord() {
 
 </div>
 
-<div class="Hangman">
+<div id="Hangman">
 </div>
 
-<div class="Bank">
+<div id="Bank">
 </div>
 
-<div class="Words">
+<div id="Words">
 </div>
 
 <div id="content">
 </div>
 
 </body>
+
+<!-- Create Bank -->
+<script>
+
+var div = document.getElementById('Bank');
+var text = document.createElement('div');
+text.innerHTML = "Bank";
+text.style.fontSize = "24px";
+text.style.fontWeight = "bold";
+text.style.textDecoration = "underline"
+text.style.paddingLeft = "250px";
+
+div.appendChild(text);
+
+createButtons();
+
+function createButtons(){
+	var buttonDiv = document.createElement('div');
+	buttonDiv.style.fontSize = "48px";
+	buttonDiv.style.fontWeight = "bold";
+	buttonDiv.style.textAlign = "center";
+	
+	
+	for(var i = 0; i < 26; i++){
+		var button = document.createElement('INPUT');
+		button.type = "button";
+		button.value = i;
+		button.onclick = button_click(i){};
+	
+		if(i % 13 == 0){
+			buttonDiv.innerHTML = buttonDiv.innerHTML + "<br />";
+		}
+		buttonDiv.appendChild(button);
+		//buttonDiv.innerHTML = buttonDiv.innerHTML +  String.fromCharCode(97 + i) + " ";
+	}
+		div.appendChild(buttonDiv);
+}
+
+</script>
 
 </html>
