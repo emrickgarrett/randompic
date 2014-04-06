@@ -6,11 +6,72 @@
 <TITLE> Give Me A Random Picture </TITLE>
 <!--- This is the link to the stylesheet we will be using ---->
 <LINK rel="stylesheet" type="text/css" href="style/style.css">
+<LINK rel="script" type="text/javascript" href="scripts/getPic.js">
+
+<script src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      google.load('search', '1');
+
+      var imageSearch;
+	  var searchTerm = "Garrett";
+
+      function searchComplete() {
+
+        // Check that we got results
+        if (imageSearch.results && imageSearch.results.length > 0) {
+
+          // Grab our content div, clear it.
+          var contentDiv = document.getElementById('Picture');
+
+          // Loop through our results, printing them to the page.
+          var results = imageSearch.results;
+			// For each result write it's title and image to the screen
+			var result = results[0];
+			
+			// We use titleNoFormatting so that no HTML tags are left in the 
+			// title
+			var newImg = document.createElement('img');
+			newImg.style.float = "left"
+			newImg.style.marginTop= "50px";
+			newImg.style.marginLeft="15%";
+			
+			var imgW = result.height;
+			var imgH = result.width;
+
+			// There is also a result.url property which has the escaped version
+			newImg.src=result.url;
+			contentDiv.appendChild(newImg);
+        }
+      }
+
+      function OnLoad() {
+      
+        // Create an Image Search instance.
+        imageSearch = new google.search.ImageSearch();
+
+        // Set searchComplete as the callback function when a search is 
+        // complete.  The imageSearch object will have results in it.
+        imageSearch.setSearchCompleteCallback(this, searchComplete, null);
+
+        // Find me a beautiful car.
+        imageSearch.execute(searchTerm);
+        
+        // Include the required Google branding
+        google.search.Search.getBranding('branding');
+      }
+      google.setOnLoadCallback(OnLoad);
+    </script>
 
 </head>
 <body>
 
-<div class="Picture">
+
+
+<div id="Picture">
+
+<div id="content"></div>
+
 </div>
 
 <div class="Hangman">
@@ -20,6 +81,9 @@
 </div>
 
 <div class="Words">
+</div>
+
+<div id="content">
 </div>
 
 </body>
