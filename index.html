@@ -7,6 +7,31 @@
 <!--- This is the link to the stylesheet we will be using ---->
 <LINK rel="stylesheet" type="text/css" href="style/style.css">
 
+<!-- Handle Win/Loss conditions -->
+<script>
+
+</script>
+
+<!-- Load a text file and generate a word -->
+<script>
+
+var words = new Array();
+words[0] = "Coffee";words[1] = "Beans";words[3] = "Computer";words[4] = "Word";words[5] = "Dog";words[6] = "Doge";words[7] = "Cat";words[8] = "Rat";words[9] = "Mat";
+words[10] = "Liquid";words[11] = "Dirty";words[12] = "Mouse";words[13] = "Four";words[14] = "Tinman";words[15] = "Wrapper";words[16] = "Tree";words[17] = "Ohio";
+words[18] = "Shark";words[19] = "Spear";words[20] = "Red Bull";words[21] = "Slap";words[22] = "Internet";words[23] = "Black";words[24] = "Snapple";words[25] = "Meme";
+words[26] = "USB";words[27] = "Fire";words[28] = "Police";words[29] = "Shirt";words[30] = "Shoes";words[31] = "Muffin";words[32] = "Car Keys";words[33] = "Gypsy";
+words[34] = "Trap";words[35] = "Snack";words[36] = "Goal";words[37] = "Goat";words[38] = "Bag";words[39] = "Red";words[40] = "Marker";words[41] = "Nike";
+words[42] = "Robot";
+
+function getWord() {
+	var randomNum = Math.floor((Math.random()*42)+0);  //Create random number to choose array
+	var word = words[randomNum];
+	
+	return word;
+}
+
+</script>	
+
 <!-- Image grabber -->
 <script src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -14,7 +39,7 @@
       google.load('search', '1');
 
       var imageSearch;
-	  var searchTerm = "Doge";
+	  var searchTerm = getWord();
 
       function searchComplete() {
 
@@ -85,34 +110,12 @@
         google.search.Search.getBranding('branding');
       }
       google.setOnLoadCallback(OnLoad);
+	  
+	  function getImageWord(){
+		return searchTerm;
+	  }
     </script>
-
-<!-- Load a text file and generate a word -->
-<script>
-
-var words = new Array();
-words[0] = "Coffee";words[1] = "Beans";words[3] = "Computer";words[4] = "Word";words[5] = "Dog";words[6] = "Doge";words[7] = "Cat";words[8] = "Rat";words[9] = "Mat";
-words[10] = "Liquid";words[11] = "Dirty";words[12] = "Mouse";words[13] = "Four";words[14] = "Tinman";words[15] = "Wrapper";words[16] = "Tree";words[17] = "Ohio";
-words[18] = "Shark";words[19] = "Spear";words[20] = "Red Bull";words[21] = "Slap";words[22] = "Internet";words[23] = "Black";words[24] = "Snapple";words[25] = "Meme";
-words[26] = "USB";words[27] = "Fire";words[28] = "Police";words[29] = "Shirt";words[30] = "Shoes";words[31] = "Muffin";words[32] = "Car Keys";words[33] = "Gypsy";
-words[34] = "Trap";words[35] = "Snack";words[36] = "Goal";words[37] = "Goat";words[38] = "Bag";words[39] = "Red";words[40] = "Marker";words[41] = "Nike";
-words[42] = "Robot";
-
-var word = selectWord();
-alert(word);
-var wordLength = (word.length);
-alert(wordLength);
-
-function selectWord() {
-	var randomNum = Math.floor((Math.random()*42)+0);  //Creat random number to choose array
-	var word = words[randomNum];
 	
-	return word;
-}
-
-</script>	
-
-
 </head>
 <body>
 
@@ -138,7 +141,7 @@ function selectWord() {
 
 </body>
 
-<!-- Create Bank -->
+<!-- Create Bank and Handle Guesses -->
 <script>
 
 var div = document.getElementById('Bank');
@@ -148,6 +151,11 @@ text.style.fontSize = "24px";
 text.style.fontWeight = "bold";
 text.style.textDecoration = "underline"
 text.style.paddingLeft = "250px";
+
+var word = getImageWord().toUpperCase();
+var size = uniqueSize();
+var goodGuesses = new Array();
+var badGuesses = new Array();
 
 div.appendChild(text);
 
@@ -162,7 +170,8 @@ function createButtons(){
 	
 	
 	for(var i = 1; i < 27; i++){
-		buttonDiv.innerHTML = buttonDiv.innerHTML + '<button onclick="button_click(this)"> ' + String.fromCharCode(64 + i)  + '  </button>';
+		buttonDiv.innerHTML = buttonDiv.innerHTML + 
+		'<button onclick="button_click(this)" value="' + String.fromCharCode(64 + i) + '"> ' + String.fromCharCode(64 + i)  + '  </button>';
 	
 		if(i % 13 == 0){
 			buttonDiv.innerHTML = buttonDiv.innerHTML + "<br />";
@@ -174,6 +183,47 @@ function createButtons(){
 
 function button_click(button){
 	button.disabled = "true";
+	make_guess(button.value);
+}
+
+function make_guess(guess){
+	if(word.indexOf(guess) != -1){
+		foundWord(guess);
+	}else{
+		badGuess(guess);
+	}
+}
+
+function foundWord(guess){
+	//buttonDiv.innerHTML = "FOUND: " + guess + getImageWord();
+	var length = goodGuesses.length;
+	goodGuesses[length] = guess;
+	if(goodGuesses.length == size){
+		buttonDiv.innerHTML = "YOU WIN!";
+	}
+}
+
+function badGuess(guess){
+	//buttonDiv.innerHTML = "NOT FOUND: " + guess + getImageWord();
+	var length = badGuesses.length;
+	badGuesses[length] = guess;
+	if(badGuesses.length == 6){
+		buttonDiv.innerHTML = "YOU LOSE!";
+	}
+}
+
+function uniqueSize(){
+	var unique = 0;
+	var guesses = "";
+	
+	for(var i = 0; i < word.length; i++){
+		if(guesses.indexOf((word.toLowerCase()).charAt(i)) == -1 && word.charAt(i) != " "){
+			guesses = guesses + (word.toLowerCase()).charAt(i);
+			unique++;
+		}
+	}
+	
+	return unique;
 }
 
 </script>
