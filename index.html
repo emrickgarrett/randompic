@@ -183,16 +183,20 @@ function initHangman(){
 function guessedWrong(){
 	wrongGuesses++;
 	
-	var picture = document.createElement('img');
-	picture.src = imageURL + wrongGuesses + ".png";
-	
-	div = document.getElementById("Hangman");
-	
-	while(div.firstChild){
-		div.removeChild(div.firstChild);
+	if(wrongGuesses <= 6){
+		
+		var picture = document.createElement('img');
+		picture.src = imageURL + wrongGuesses + ".png";
+		
+		div = document.getElementById("Hangman");
+		
+		while(div.firstChild){
+			div.removeChild(div.firstChild);
+		}
+		
+		div.appendChild(picture);
+		
 	}
-	
-	div.appendChild(picture);
 }
 
 function initCoverImage(){/*
@@ -324,14 +328,11 @@ function restart(){
 
 function hasLost(word){
 
-	restart();
-
-	try{
-		initSearch();
-	}catch(err){
-	}
-	initBank();
-	initHangman();
+	var buttonArea = document.getElementById("Words");
+	var tempButton = document.createElement("div");
+	tempButton.style.marginTop = "150px"
+	tempButton.innerHTML ='<center><button onclick="restart()" enabled="true">Try Again</button></center>';
+	buttonArea.appendChild(tempButton);
 }
 
 
