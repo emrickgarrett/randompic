@@ -27,7 +27,9 @@ function getWord() {
 	return word;
 }
 
-</script>	
+</script>
+
+
 
 <!-- Image grabber -->
 <script src="https://www.google.com/jsapi"></script>
@@ -79,14 +81,12 @@ function getWord() {
 			var imgH = result.height;
 			
 			var ratio = 1.0;
-			if(imgW > imgH){
-				if(imgW > 600){
-					ratio = (600/imgW);
-				}
-				
-			}else{
-				if(imgH > 350){
-					ratio = (350/imgH);
+			
+			if(imgW > 600 || imgH > 350){
+				if(600/imgW < 350/imgH){
+					ratio = 600/imgW;
+				}else{
+					ratio = 350/imgH;
 				}
 			}
 
@@ -135,6 +135,9 @@ function getWord() {
 
 
 
+
+
+
 <div id="Picture">
 
 <div id="content"></div>
@@ -153,12 +156,54 @@ function getWord() {
 <div id="content">
 </div>
 
+
+
+
+
+
 </body>
+
+<!-- Update Hangman image -->
+<script>
+
+var wrongGuesses = 0;
+var imageURL = "images/Hangman";
+var div = document.getElementById("Hangman");
+initHangman();
+
+function initHangman(){
+	wrongGuesses = 0;
+	var picture = document.createElement('img');
+	
+	div = document.getElementById("Hangman");
+	while(div.firstChild){
+		div.removeChild(div.firstChild);
+	}
+	
+	picture.src = imageURL + "0" + ".png";
+	div.appendChild(picture);
+}
+
+function guessedWrong(){
+	wrongGuesses++;
+	
+	var picture = document.createElement('img');
+	picture.src = imageURL + wrongGuesses + ".png";
+	
+	div = document.getElementById("Hangman");
+	
+	while(div.firstChild){
+		div.removeChild(div.firstChild);
+	}
+	
+	div.appendChild(picture);
+}
+</script>	
 
 <!-- Create Bank and Handle Guesses -->
 <script>
 
-var div = document.getElementById('Bank');
+var div2 = document.getElementById('Bank');
 var text = document.createElement('div');
 text.innerHTML = "Bank";
 text.style.fontSize = "24px";
@@ -171,7 +216,7 @@ var size = uniqueSize();
 var goodGuesses = new Array();
 var badGuesses = new Array();
 
-div.appendChild(text);
+div2.appendChild(text);
 
 createButtons();
 
@@ -212,7 +257,7 @@ function createButtons(){
 		}
 
 	}
-		div.appendChild(buttonDiv);
+		div2.appendChild(buttonDiv);
 }
 
 function button_click(button){
@@ -229,6 +274,7 @@ function hasWon(word){
 	
 	}
 	initBank();
+	initHangman();
 }
 
 function hasLost(word){
@@ -237,6 +283,7 @@ function hasLost(word){
 	}catch(err){
 	}
 	initBank();
+	initHangman();
 }
 
 
@@ -259,10 +306,12 @@ function foundWord(guess){
 
 function badGuess(guess){
 	//buttonDiv.innerHTML = "NOT FOUND: " + guess + getImageWord();
+	guessedWrong();
 	var length = badGuesses.length;
 	badGuesses[length] = guess;
 	if(badGuesses.length == 6){
 		hasLost(guess);
+	}else{
 	}
 }
 
