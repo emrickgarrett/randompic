@@ -198,7 +198,7 @@ function guessedWrong(){
 	div.appendChild(picture);
 }
 
-function initCoverImage(){
+function initCoverImage(){/*
 	div2 = document.getElementById('Picture');
 	
 	while(div2.childNodes.length > 1){
@@ -229,7 +229,7 @@ function initCoverImage(){
 		
 		div2.appendChild(part);
 	}
-	
+	*/
 }
 
 function unlockImage(){
@@ -256,6 +256,7 @@ var badGuesses = new Array();
 div2.appendChild(text);
 
 createButtons();
+populateGuesses();
 
 function initBank(){
 	word = getImageWord().toUpperCase();
@@ -275,6 +276,7 @@ function initBank(){
 	text.style.paddingLeft = "250px";
 	
 	createButtons();
+	populateGuesses();
 }
 
 function createButtons(){
@@ -327,6 +329,7 @@ function hasLost(word){
 function make_guess(guess){
 	if(word.indexOf(guess) != -1){
 		foundWord(guess);
+		populateGuesses();
 	}else{
 		badGuess(guess);
 	}
@@ -364,6 +367,28 @@ function uniqueSize(){
 	}
 	
 	return unique;
+}
+
+function populateGuesses(){
+	var guessArea = document.getElementById("Words");
+	
+	while(guessArea.firstChild){
+		guessArea.removeChild(guessArea.firstChild);
+	}
+	
+	for(var i = 0; i < word.length; i++){
+	var letter = document.createElement("text");
+		letter.style.fontSize = "34px";
+	
+		if(goodGuesses.indexOf(word[i]) != -1){
+			letter.innerHTML = word[i] + " ";
+		}else{
+			letter.innerHTML = "_" + " ";
+		}
+		
+		guessArea.appendChild(letter);
+	}
+
 }
 
 </script>
