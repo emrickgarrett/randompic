@@ -36,10 +36,7 @@
 			newImg.style.float = "left"
 			newImg.style.marginTop= "50px";
 			newImg.style.marginLeft="15%";
-			//holderDiv.style.width = "600px";
-			//holderDiv.style.height = "350px";
-			//holderDiv.style.marginLeft="15%";
-			//holderDiv.style.float = "left";
+			
 			
 			var imgW = result.width;
 			var imgH = result.height;
@@ -94,10 +91,24 @@
 <script>
 
 var words = new Array();
-words[0] = "coffee";words[1] = "Beans";words[3] = "Computer";words[4] = "Word";words[5] = "Dog";words[6] = "Doge";words[7] = "Cat";words[8] = "Rat";words[9] = "Mat";
+words[0] = "Coffee";words[1] = "Beans";words[3] = "Computer";words[4] = "Word";words[5] = "Dog";words[6] = "Doge";words[7] = "Cat";words[8] = "Rat";words[9] = "Mat";
 words[10] = "Liquid";words[11] = "Dirty";words[12] = "Mouse";words[13] = "Four";words[14] = "Tinman";words[15] = "Wrapper";words[16] = "Tree";words[17] = "Ohio";
 words[18] = "Shark";words[19] = "Spear";words[20] = "Red Bull";words[21] = "Slap";words[22] = "Internet";words[23] = "Black";words[24] = "Snapple";words[25] = "Meme";
 words[26] = "USB";words[27] = "Fire";words[28] = "Police";words[29] = "Shirt";words[30] = "Shoes";words[31] = "Muffin";words[32] = "Car Keys";words[33] = "Gypsy";
+words[34] = "Trap";words[35] = "Snack";words[36] = "Goal";words[37] = "Goat";words[38] = "Bag";words[39] = "Red";words[40] = "Marker";words[41] = "Nike";
+words[42] = "Robot";
+
+var word = selectWord();
+alert(word);
+var wordLength = (word.length);
+alert(wordLength);
+
+function selectWord() {
+	var randomNum = Math.floor((Math.random()*42)+0);  //Creat random number to choose array
+	var word = words[randomNum];
+	
+	return word;
+}
 
 </script>	
 
