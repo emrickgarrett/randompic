@@ -7,10 +7,7 @@
 <!--- This is the link to the stylesheet we will be using ---->
 <LINK rel="stylesheet" type="text/css" href="style/style.css">
 
-<!-- Handle Win/Loss conditions -->
-<script>
 
-</script>
 
 <!-- Load a text file and generate a word -->
 <script>
@@ -40,6 +37,21 @@ function getWord() {
 
       var imageSearch;
 	  var searchTerm = getWord();
+	  
+	  function initSearch(){
+		google.load('search', '1');
+		searchTerm = getWord();
+		var content = document.getElementById('Picture');
+		
+		content.removeChild(content.lastChild);
+		
+		//while(content.hasChildNodes()){
+			//content.removeChild(content.lastChild);
+		//}
+		
+		OnLoad();
+		//google.setOnLoadCallback(OnLoad);
+	  }
 
       function searchComplete() {
 
@@ -102,7 +114,9 @@ function getWord() {
         // Set searchComplete as the callback function when a search is 
         // complete.  The imageSearch object will have results in it.
         imageSearch.setSearchCompleteCallback(this, searchComplete, null);
-
+		
+		searchTerm = getWord();
+		
         // Find me a beautiful car.
         imageSearch.execute(searchTerm);
         
@@ -161,6 +175,26 @@ div.appendChild(text);
 
 createButtons();
 
+function initBank(){
+	word = getImageWord().toUpperCase();
+	size = uniqueSize();
+	goodGuesses = new Array();
+	badGuesses = new Array();
+	
+	var bank = document.getElementById('Bank');
+	while(bank.childNodes.length > 2){
+		bank.removeChild(bank.lastChild);
+	}
+	var text = document.createElement('div');
+	text.innerHTML = "Bank";
+	text.style.fontSize = "24px";
+	text.style.fontWeight = "bold";
+	text.style.textDecoration = "underline"
+	text.style.paddingLeft = "250px";
+	
+	createButtons();
+}
+
 function createButtons(){
 	var buttonDiv = document.createElement('div');
 	buttonDiv.id = "buttonDiv";
@@ -171,7 +205,7 @@ function createButtons(){
 	
 	for(var i = 1; i < 27; i++){
 		buttonDiv.innerHTML = buttonDiv.innerHTML + 
-		'<button onclick="button_click(this)" value="' + String.fromCharCode(64 + i) + '"> ' + String.fromCharCode(64 + i)  + '  </button>';
+		'<button onclick="button_click(this)" enabled="true" value="' + String.fromCharCode(64 + i) + '"> ' + String.fromCharCode(64 + i)  + ' </button>';
 	
 		if(i % 13 == 0){
 			buttonDiv.innerHTML = buttonDiv.innerHTML + "<br />";
@@ -186,6 +220,26 @@ function button_click(button){
 	make_guess(button.value);
 }
 
+<!-- Handle Win/Loss conditions -->
+
+function hasWon(word){
+	try{
+		initSearch();
+	}catch(err){
+	
+	}
+	initBank();
+}
+
+function hasLost(word){
+	try{
+		initSearch();
+	}catch(err){
+	}
+	initBank();
+}
+
+
 function make_guess(guess){
 	if(word.indexOf(guess) != -1){
 		foundWord(guess);
@@ -199,7 +253,7 @@ function foundWord(guess){
 	var length = goodGuesses.length;
 	goodGuesses[length] = guess;
 	if(goodGuesses.length == size){
-		buttonDiv.innerHTML = "YOU WIN!";
+		hasWon(guess);
 	}
 }
 
@@ -208,7 +262,7 @@ function badGuess(guess){
 	var length = badGuesses.length;
 	badGuesses[length] = guess;
 	if(badGuesses.length == 6){
-		buttonDiv.innerHTML = "YOU LOSE!";
+		hasLost(guess);
 	}
 }
 
