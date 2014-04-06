@@ -14,7 +14,7 @@ white-space:nowrap;
 float:left;
 }
 
-.Bank{
+#Bank{
 background:#2A9B92;
 height:250px;
 width:600px;
@@ -24,7 +24,7 @@ display:block;
 clear:both;
 }
 
-.Hangman{
+#Hangman{
 background:#43D6CE;
 height:350px;
 width:350px;
@@ -33,7 +33,7 @@ margin-top:50px;
 
 }
 
-.Words{
+#Words{
 background:#E76247;
 height:250px;
 width:350px;
