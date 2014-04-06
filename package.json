@@ -1,0 +1,10 @@
+{
+	"name": "Random-Picture",
+	"version": "0.1.0",
+	"description": "Our hackathon project",
+	"author": "Garrett <garrett@nomnomnation.net>",
+	"dependencies": {
+		"express": "3.3.x"
+	}
+}
+

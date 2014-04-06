@@ -10,28 +10,21 @@
 
 
 <!-- Load a text file and generate a word -->
-<script>
+<script type="text/javascript" >
+function getWord(){
+	var xmlHttp = null;
+	xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", "http://randompic-12179.onmodulus.net/word", false);
+	xmlHttp.send( null );
+	if(xmlHttp.status == 200){
+		return xmlHttp.responseText;
+	}else{
+		return "banana";
+	}
 
-var words = new Array();
-words[0] = "Coffee";words[1] = "Beans";words[3] = "Computer";words[4] = "Word";words[5] = "Dog";words[6] = "Doge";words[7] = "Cat";words[8] = "Rat";words[9] = "Mat";
-words[10] = "Liquid";words[11] = "Dirty";words[12] = "Mouse";words[13] = "Four";words[14] = "Tinman";words[15] = "Wrapper";words[16] = "Tree";words[17] = "Ohio";
-words[18] = "Shark";words[19] = "Spear";words[20] = "Red Bull";words[21] = "Slap";words[22] = "Internet";words[23] = "White";words[24] = "Snapple";words[25] = "Meme";
-words[26] = "USB";words[27] = "Fire";words[28] = "Police";words[29] = "Shirt";words[30] = "Shoes";words[31] = "Muffin";words[32] = "Car Keys";words[33] = "Gypsy";
-words[34] = "Trap";words[35] = "Snack";words[36] = "Goal";words[37] = "Goat";words[38] = "Bag";words[39] = "Red";words[40] = "Marker";words[41] = "Nike";
-words[42] = "Robot";words[43] = "Pirate";words[44] = "Jump";words[45] = "Bottle";words[46] = "Sleep";words[47] = "Camera";words[48] = "Pen";words[49] = "Sun";
-words[50] = "Cup";words[51] = "Cartoon";words[52] = "Television";words[53] = "Pizza";words[54] = "Hamburger";words[55] = "Weights";words[56] = "Money";
-words[57] = "Tower";words[58] = "Music";words[59] = "Yawn";words[60] = "Kick";words[61] = "Tail";words[62] = "Window";words[63] = "Chemistry";
-words[64] = "Band";words[65] = "Run";words[66] = "Movie";words[67] = "Spider";words[68] = "Star";words[69] = "Jeans";words[70] = "Grin";words[71] = "Ladder";
-words[72] = "Eye";words[73] = "Coke";words[74] = "Sucker";words[75] = "Gum";
-
-function getWord() {
-	var randomNum = Math.floor((Math.random()*75)+0);  //Create random number to choose array
-	var word = words[randomNum];
-	return word;
 }
 
 </script>
-
 
 
 <!-- Image grabber -->
