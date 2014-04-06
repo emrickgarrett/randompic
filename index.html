@@ -290,9 +290,9 @@ function createButtons(){
 	
 	for(var i = 1; i < 27; i++){
 		buttonDiv.innerHTML = buttonDiv.innerHTML + 
-		'<button onclick="button_click(this)" enabled="true" value="' + String.fromCharCode(64 + i) + '"> ' + String.fromCharCode(64 + i)  + ' </button>';
+		'<button onclick="button_click(this)" enabled="true" style="font-size:18px" value="' + String.fromCharCode(64 + i) + '"> ' + String.fromCharCode(64 + i)  + ' </button>' + "&nbsp&nbsp";
 	
-		if(i % 13 == 0){
+		if(i % 9 == 0){
 			buttonDiv.innerHTML = buttonDiv.innerHTML + "<br />";
 		}
 
