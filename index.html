@@ -158,12 +158,6 @@ function getWord() {
 </div>
 
 
-
-
-
-
-</body>
-
 <!-- Update Hangman image and Image Blocker -->
 <script>
 
@@ -309,7 +303,16 @@ function button_click(button){
 
 <!-- Handle Win/Loss conditions -->
 
-function hasWon(word){
+function hasWon(){
+	var buttonArea = document.getElementById("Words");
+	var tempButton = document.createElement("div");
+	tempButton.style.marginTop = "150px"
+	tempButton.innerHTML ='<center><button onclick="restart()" enabled="true">Play Again</button></center>';
+	buttonArea.appendChild(tempButton);
+}
+
+function restart(){
+
 	try{
 		initSearch();
 	}catch(err){
@@ -320,6 +323,9 @@ function hasWon(word){
 }
 
 function hasLost(word){
+
+	restart();
+
 	try{
 		initSearch();
 	}catch(err){
@@ -332,7 +338,6 @@ function hasLost(word){
 function make_guess(guess){
 	if(word.indexOf(guess) != -1){
 		foundWord(guess);
-		populateGuesses();
 	}else{
 		badGuess(guess);
 	}
@@ -342,8 +347,9 @@ function foundWord(guess){
 	//buttonDiv.innerHTML = "FOUND: " + guess + getImageWord();
 	var length = goodGuesses.length;
 	goodGuesses[length] = guess;
+	populateGuesses();
 	if(goodGuesses.length == size){
-		hasWon(guess);
+		hasWon();
 	}
 }
 
@@ -378,15 +384,15 @@ function populateGuesses(){
 	while(guessArea.firstChild){
 		guessArea.removeChild(guessArea.firstChild);
 	}
-	
-	for(var i = 0; i < word.length; i++){
-	var letter = document.createElement("text");
+		var letter = document.createElement("div");
 		letter.style.fontSize = "34px";
+		letter.style.textAlign = "center";
+	for(var i = 0; i < word.length; i++){
 	
 		if(goodGuesses.indexOf(word[i]) != -1){
-			letter.innerHTML = word[i] + " ";
+			letter.innerHTML = letter.innerHTML + word[i] + " ";
 		}else{
-			letter.innerHTML = "_" + " ";
+			letter.innerHTML = letter.innerHTML + "_" + " ";
 		}
 		
 		guessArea.appendChild(letter);
@@ -395,5 +401,11 @@ function populateGuesses(){
 }
 
 </script>
+
+
+
+</body>
+
+
 
 </html>
