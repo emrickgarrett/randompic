@@ -1,10 +1,11 @@
+
 <script src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 
       google.load('search', '1');
 
       var imageSearch;
-	  var searchTerm = "Computer";
+	  var searchTerm = "Georgia";
 
       function searchComplete() {
 
@@ -22,14 +23,17 @@
 			// We use titleNoFormatting so that no HTML tags are left in the 
 			// title
 			var newImg = document.createElement('img');
+			var holderDiv = document.createElement('div');
 			newImg.style.float = "left"
 			newImg.style.marginTop= "50px";
 			newImg.style.marginLeft="15%";
+			//holderDiv.style.width = "600px";
+			//holderDiv.style.height = "350px";
+			//holderDiv.style.marginLeft="15%";
+			//holderDiv.style.float = "left";
 			
-			var imgW = result.height;
-			var imgH = result.width;
-			
-			alert("" + imgW + " : " + imgH);
+			var imgW = result.width;
+			var imgH = result.height;
 			
 			var ratio = 1.0;
 			if(imgW > imgH){
@@ -45,11 +49,18 @@
 
 			newImg.style.width = imgW*ratio + "px";
 			newImg.style.height = imgH*ratio + "px";
+			newImg.style.paddingLeft = ((600 - Math.floor(imgW*ratio))/2) + "px";
+			newImg.style.paddingRight = ((600- Math.floor(imgW*ratio))/2) + "px";
+			newImg.style.paddingTop = ((350 - Math.floor(imgH*ratio))/2) + "px";
+			//alert(((600 - newImg.style.width)/2));
 			
 			// There is also a result.url property which has the escaped version
 			newImg.src=result.url;
-			contentDiv.appendChild(newImg);
-        }
+			holderDiv.appendChild(newImg);
+			contentDiv.appendChild(holderDiv);
+        }else{
+			alert("No images found :(");
+		}
       }
 
       function OnLoad() {
