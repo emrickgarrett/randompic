@@ -1,70 +1,71 @@
-<script type="text/javascript">
+<script src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
 
-      var clientId = '837050751313';
+      google.load('search', '1');
 
-      var apiKey = 'AIzaSyDhlKczqHkIHwXIVRSSDh8wISJsdMGv-wE';
+      var imageSearch;
+	  var searchTerm = "Computer";
 
-      var scopes = 'https://www.googleapis.com/auth/plus.me';
+      function searchComplete() {
 
-      function handleClientLoad() {
-        // Step 2: Reference the API key
-        gapi.client.setApiKey(apiKey);
-        window.setTimeout(checkAuth,1);
-      }
+        // Check that we got results
+        if (imageSearch.results && imageSearch.results.length > 0) {
 
-      function checkAuth() {
-        gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
-      }
+          // Grab our content div, clear it.
+          var contentDiv = document.getElementById('Picture');
 
-      function handleAuthResult(authResult) {
-        var authorizeButton = document.getElementById('authorize-button');
-        if (authResult && !authResult.error) {
-          authorizeButton.style.visibility = 'hidden';
-          makeApiCall();
-		  alert("success");
-        } else {
-		alert("error");
+          // Loop through our results, printing them to the page.
+          var results = imageSearch.results;
+			// For each result write it's title and image to the screen
+			var result = results[0];
+			
+			// We use titleNoFormatting so that no HTML tags are left in the 
+			// title
+			var newImg = document.createElement('img');
+			newImg.style.float = "left"
+			newImg.style.marginTop= "50px";
+			newImg.style.marginLeft="15%";
+			
+			var imgW = result.height;
+			var imgH = result.width;
+			
+			alert("" + imgW + " : " + imgH);
+			
+			var ratio = 1.0;
+			if(imgW > imgH){
+				if(imgW > 600){
+					ratio = (600/imgW);
+				}
+				
+			}else{
+				if(imgH > 350){
+					ratio = (350/imgH);
+				}
+			}
+
+			newImg.style.width = imgW*ratio + "px";
+			newImg.style.height = imgH*ratio + "px";
+			
+			// There is also a result.url property which has the escaped version
+			newImg.src=result.url;
+			contentDiv.appendChild(newImg);
         }
       }
 
-      function handleAuthClick(event) {
-        // Step 3: get authorization to use private data
-        gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
-        return false;
-      }
+      function OnLoad() {
+      
+        // Create an Image Search instance.
+        imageSearch = new google.search.ImageSearch();
 
-      // Load the API and make an API call.  Display the results on the screen.
-      function makeApiCall() {
-        // Step 4: Load the Google+ API
-        gapi.client.load('plus', 'v1', function() {
-          // Step 5: Assemble the API request
-          var request = gapi.client.plus.people.get({
-            'userId': 'me'
-          });
-          // Step 6: Execute the API request
-          request.execute(function(resp) {
-            var heading = document.createElement('h4');
-            var image = document.createElement('img');
-            image.src = resp.image.url;
-            heading.appendChild(image);
-            heading.appendChild(document.createTextNode(resp.displayName));
+        // Set searchComplete as the callback function when a search is 
+        // complete.  The imageSearch object will have results in it.
+        imageSearch.setSearchCompleteCallback(this, searchComplete, null);
 
-            document.getElementById('content').appendChild(heading);
-          });
-        });
+        // Find me a beautiful car.
+        imageSearch.execute(searchTerm);
+        
+        // Include the required Google branding
+        google.search.Search.getBranding('branding');
       }
+      google.setOnLoadCallback(OnLoad);
     </script>
-    // Step 1: Load JavaScript client library
-    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-
-function search(){
-
-}
-
-function changePic(){
-
-}
-
-
-
-</script>
